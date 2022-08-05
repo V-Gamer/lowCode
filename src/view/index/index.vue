@@ -79,7 +79,7 @@
                       </span>
                       <span></span>
                     </div>
-                    <div class="perFunc-box">
+                    <div class="perFunc-box" @click="fn_toEdit(prj.id)">
                       <span class="func-icon">
                         <img src="./img/see.png" alt="" />
                       </span>
@@ -133,7 +133,7 @@
                       </span>
                       <span></span>
                     </div>
-                    <div class="perFunc-box">
+                    <div class="perFunc-box" @click="fn_toEdit(prj.id)">
                       <span class="func-icon">
                         <img src="./img/see.png" alt="" />
                       </span>
@@ -178,11 +178,13 @@ export default {
                 {
                   type: "computer",
                   title: "版本一",
+                  id:1,
                   funcBoxIsShow: false, // projectlist的功能盒子是否显示
                 },
                 {
                   type: "phone",
                   title: "版本二",
+                  id:2,
                   funcBoxIsShow: false,
                 },
               ],
@@ -202,11 +204,13 @@ export default {
             {
               type: "computer",
               title: "版本一",
+                  id:21,
               funcBoxIsShow: false, // projectlist的功能盒子是否显示
             },
             {
               type: "phone",
               title: "版本二",
+                  id:13,
               funcBoxIsShow: false,
             },
           ],
@@ -292,6 +296,10 @@ export default {
       // 防止重复点击
       if (index == this.curConNavIdx) return;
       this.curConNavIdx = index;
+    },
+    // 跳转事件
+    fn_toEdit(index) {
+      this.$router.push({ path: "editPage", query: { prjId: index } });
     },
   },
 };
