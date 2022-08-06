@@ -6,6 +6,7 @@ Vue.use(Router);
 // 页面
 import index from '../view/index/index';
 import editPage from '../view/editPage/index';
+import test from '../view/test/index'
 
 export default new Router({
   mode: "history",
@@ -23,6 +24,11 @@ export default new Router({
       path: '/editPage',
       name: '编辑页',
       component: editPage
+    },
+    {
+      path: '/test',
+      name: '测试',
+      component: test
     },
   ]
 })

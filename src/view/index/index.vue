@@ -178,13 +178,13 @@ export default {
                 {
                   type: "computer",
                   title: "版本一",
-                  id:1,
+                  id: 1,
                   funcBoxIsShow: false, // projectlist的功能盒子是否显示
                 },
                 {
                   type: "phone",
                   title: "版本二",
-                  id:2,
+                  id: 2,
                   funcBoxIsShow: false,
                 },
               ],
@@ -204,13 +204,13 @@ export default {
             {
               type: "computer",
               title: "版本一",
-                  id:21,
+              id: 21,
               funcBoxIsShow: false, // projectlist的功能盒子是否显示
             },
             {
               type: "phone",
               title: "版本二",
-                  id:13,
+              id: 13,
               funcBoxIsShow: false,
             },
           ],

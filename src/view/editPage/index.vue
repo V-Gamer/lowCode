@@ -25,6 +25,9 @@
 <script>
 export default {
   name: "editPage",
+  data() {
+    return {}
+  }
 };
 </script>
 
