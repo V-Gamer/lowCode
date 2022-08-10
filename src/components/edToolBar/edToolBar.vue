@@ -1,6 +1,6 @@
 <template>
-<!-- 工具栏 -->
-    <div class="ed-toolBarLayout">
+    <!-- 工具栏 -->
+    <div class="ed-toolBarLayout" @click="fn_close($event)">
         <!-- 左边返回、和其他组件 -->
         <div class="left">
             <ul class="list_layout">
@@ -8,7 +8,16 @@
                 <div class="back_layout">
                     <div class="iconfont icon-back back" @click="fn_back()"></div>
                     <div class="line"></div>
-                    <div class="iconfont icon-triangle-solid triangle"></div>
+                    <!-- 下拉菜单meun1 -->
+                    <div
+                        class="iconfont icon-triangle-solid triangle"
+                        @click.stop="fn_menuShow('left_menu_show')"
+                    ></div>
+                    <left-menu
+                        v-show="left_menu_show"
+                        @click.native="fn_menuShow('left_menu_show')"
+                        id="left_menu"
+                    />
                 </div>
                 <!-- 工具 -->
                 <li class="li_layout" v-for="(item, index) in list_left" :key="index">
@@ -21,14 +30,18 @@
         <div v-show="mid_show" class="mid list_layout midList">
             <ul class="list_layout">
                 <!-- 对齐 -->
-                <li class="li_layout down_li">
+                <li class="li_layout down_li" @click.stop="fn_menuShow('align_menu_show')">
                     <div class="iconfont icon-arranged"></div>
                     <div class="iconfont icon-xiangxia down"></div>
+                    <!-- 对齐的二级菜单 -->
+                    <align-menu v-show="align_menu_show" id="align_menu" />
                 </li>
                 <!-- 图层 -->
-                <li class="li_layout down_li">
+                <li class="li_layout down_li" @click.stop="fn_menuShow('layer_menu_show')">
                     <div class="iconfont icon-layer"></div>
                     <div class="iconfont icon-xiangxia down"></div>
+                    <!-- 图层的二级菜单 -->
+                    <layer-menu v-show="layer_menu_show" id="layer_menu" />
                 </li>
                 <!-- 锁定 需要从vuex中获得点击的组件状态 -->
                 <li class="li_layout">
@@ -49,10 +62,16 @@
                 <li class="li_layout1 down_li_1">
                     <div class="share">分享</div>
                 </li>
-                <li class="li_layout down_li_1">
-                    <div class="canvas_sizeLayout">{{canvas_size}}</div>
+                <!-- 调整画布大小 -->
+                <li class="li_layout down_li_1"  @click.stop="fn_menuShow('canvas_menu_show')">
+                    <div class="canvas_sizeLayout">{{ canvas_size }}</div>
                     <div class="iconfont icon-xiangxia down"></div>
-
+                    <!--画布的二级菜单 需传入画布大小 -->
+                    <canvas-menu
+                        v-show="canvas_menu_show"
+                        id="canvas_menu"
+                        :canvas_size="canvas_size"
+                    />
                 </li>
             </ul>
         </div>
@@ -60,6 +79,10 @@
 </template>
 
 <script>
+import leftMenu from './leftMenu';
+import alignMenu from './alignMenu';
+import layerMenu from './layerMenu';
+import canvasMenu from './canvasMenu';
 export default {
     name: 'edToolbar',
     data() {
@@ -110,8 +133,6 @@ export default {
                     tips_show: false,
                 },
             ],
-            //画布比例
-            canvas_size:'50%'
         };
     },
     computed: {
@@ -119,7 +140,28 @@ export default {
         mid_show() {
             return this.$store.state.edToolBarData.mid_show;
         },
+        //控制左边第一个二级菜单显示
+        left_menu_show() {
+            return this.$store.state.edToolBarData.left_menu_show;
+        },
+        //控制对齐二级菜单
+        align_menu_show() {
+            return this.$store.state.edToolBarData.align_menu_show;
+        },
+        //控制图层菜单
+        layer_menu_show() {
+            return this.$store.state.edToolBarData.layer_menu_show;
+        },
+        //控制画布大小菜单
+        canvas_menu_show() {
+            return this.$store.state.edToolBarData.canvas_menu_show;
+        },
+        //控制画布大小
+        canvas_size() {
+            return this.$store.state.edToolBarData.canvas_size;
+        },
     },
+
     methods: {
         //后退功能
         fn_back() {
@@ -127,13 +169,41 @@ export default {
                 name: '首页',
             });
         },
-        //
+        //控制二级菜单显示,参数是控制显示的变量名
+        fn_menuShow(parms) {
+            this.$store.commit(`edToolBarData/fn_change`, parms);
+        },
+        //实现点击二级菜单外关闭二级菜单
+        fn_close(event) {
+            // 传入event对象
+            var el1 = document.getElementById('left_menu'); // 菜单id
+            var el2 = document.getElementById('align_menu'); // 对齐菜单id
+            var el3 = document.getElementById('layer_menu'); // 图层菜单id
+            var el4 = document.getElementById('canvas_menu'); // 画布菜单id
+
+            if (
+                !el1.contains(event.target) ||
+                !el2.contains(event.target) ||
+                !el3.contains(event.target) ||
+                !el4.contains(event.target) 
+                
+            ) {
+                // 判断菜单是否在点击范围内
+                this.$store.commit(`edToolBarData/fn_close`);
+            }
+        },
+    },
+    components: {
+        leftMenu,
+        alignMenu,
+        layerMenu,
+        canvasMenu,
     },
     created() {},
 };
 </script>
 <style scoped>
-@import '../assets/font/ToolBar/iconfont.css';
+@import '../../assets/font/ToolBar/iconfont.css';
 
 .ed-toolBarLayout {
     position: relative;
@@ -149,8 +219,8 @@ export default {
 .left {
     margin-left: 5px;
 }
-.right{
-    margin-right:10px ;
+.right {
+    margin-right: 10px;
 }
 .left,
 .right,
@@ -179,7 +249,7 @@ export default {
 }
 .iconfont {
     color: #333333;
-    font-weight: 700;
+    font-weight: 600;
 }
 .down {
     font-size: 10px;
@@ -193,19 +263,20 @@ export default {
 }
 
 .list_layout {
+    position: relative;
     list-style: none;
     height: 100%;
     display: flex;
     align-items: center;
 }
-.midList{
+.midList {
     justify-content: center;
 }
 .rightList {
-
     justify-content: flex-end;
 }
 .li_layout {
+    position: relative;
     height: 27px;
     width: 27px;
     border-radius: 4px;
@@ -235,14 +306,13 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
 }
-.canvas_sizeLayout{
+.canvas_sizeLayout {
     font-size: 13px;
 }
-.share{
+.share {
     font-size: 12px;
-    color:white;
+    color: white;
     transition: all ease-in-out 0.5s;
-
 }
 .li_layout:hover {
     cursor: pointer;

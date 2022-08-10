@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import edToolbar from '@/components/edToolBar'
+import edToolbar from '../../components/edToolBar/edToolBar.vue'
 export default {
   name: "editPage",
   mounted() {
