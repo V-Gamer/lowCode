@@ -1,4 +1,5 @@
 .canvas-container {
+  position: relative;
   flex: 1;
 }
 .canvas-container .canvas-area {
@@ -16,5 +17,13 @@
   width: 375px;
   height: 667px;
   background: #ffffff;
-  position: relative;
+}
+.canvas-container .sub-menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  background-color: #fff;
+  border-radius: 5px;
 }

@@ -21,7 +21,7 @@
         class="dot"
         v-for="(item, idx) in active ? pointList : []"
         :style="{ ...fn_getDotStyle(item.name) }"
-        @mousedown="fn_mouseDownDot"
+        @mousedown="fn_mouseDownDot(item.name)"
         :key="idx"
       ></div>
       <slot></slot>
@@ -37,6 +37,9 @@ export default {
     element: Object,
     zIndex: Number,
     active: Boolean,
+  },
+  computed: {
+    // cmpt_getPointStyle(point) {},
   },
   data() {
     return {
@@ -127,7 +130,7 @@ export default {
     // 已知bug：
     // 1.右上角和左上角放大方向和正常放大方向相反
     // 2.上中，左中，右中，下中仍不可放大
-    fn_mouseDownDot() {
+    fn_mouseDownDot(name) {
       const mouseEvent = window.event;
       mouseEvent.stopPropagation(); // 阻止事件冒泡
       mouseEvent.preventDefault(); // 阻止事件捕获
@@ -139,11 +142,9 @@ export default {
       width = Number(width);
       top = Number(top);
       left = Number(left);
-      console.log(height, width, top, left);
+      console.log(top, left);
       const startX = mouseEvent.clientX; // 鼠标位置
       const startY = mouseEvent.clientY; // 鼠标位置
-
-      console.log(startX, startY);
 
       // let needSave = false; // 是否需要记录
       const move = (moveEvent) => {
@@ -154,8 +155,38 @@ export default {
         const distanceY = clientY - startY;
         const newHeight = height + distanceY;
         const newWidth = width + distanceX;
-        defaultStyle.height = newHeight > 0 ? newHeight : 0;
-        defaultStyle.width = newWidth > 0 ? newHeight : 0;
+        const newTop = top + distanceY;
+        const newLeft = left + distanceX;
+        const distanceY1 = startY - clientY;
+        const distanceX1 = startX - clientX;
+        if (name == "upperMiddle" || name == "lowerMiddle") {
+          defaultStyle.height = newHeight > 0 ? newHeight : 0;
+        } else if (name == "middleLeft" || name == "middleRight") {
+          defaultStyle.width = newWidth > 0 ? newWidth : 0;
+        } else {
+          defaultStyle.height = newHeight > 0 ? newHeight : 0;
+          defaultStyle.width = newWidth > 0 ? newWidth : 0;
+        }
+
+        // 移动点
+        if (name == "upperLeft") {
+          defaultStyle.top = newTop;
+          defaultStyle.left = newLeft;
+          defaultStyle.height =
+            distanceY1 + height > 0 ? distanceY1 + height : 0;
+          defaultStyle.width = distanceX1 + width > 0 ? distanceX1 + width : 0;
+        } else if (name == "upperMiddle" || name == "upperRight") {
+          defaultStyle.top = newTop;
+          defaultStyle.height =
+            distanceY1 + height > 0 ? distanceY1 + height : 0;
+        } else if (name == "middleLeft" || name == "lowerLeft") {
+          defaultStyle.left = newLeft;
+          defaultStyle.width = distanceX1 + width > 0 ? distanceX1 + width : 0;
+        }
+        // console.log(, startY); // 331 136
+
+        // defaultStyle.top =
+        // defaultStyle.left =
         this.$store.commit("componentData/fn_setComponentStyle", defaultStyle);
       };
 

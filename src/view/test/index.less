@@ -1,5 +1,7 @@
 .canvas-container {
+  position: relative;
   flex: 1;
+  // 画布
   .canvas-area {
     position: fixed;
     top: 50%;
@@ -13,8 +15,17 @@
         width: 375px;
         height: 667px;
         background: rgb(255, 255, 255);
-        position: relative;
+        // position: relative;
       }
     }
+  }
+  .sub-menu-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 30px;
+    width: 30px;
+    background-color: #fff;
+    border-radius: 5px;
   }
 }

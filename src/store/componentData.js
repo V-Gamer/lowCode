@@ -4,7 +4,7 @@ export default {
   state: {
     curComponent: undefined,
     editMode: 'normal',
-    canvasComponentList: [],
+    pagesComponents: [],
   },
   mutations: {
     fn_selectComponent(state, data) {
@@ -12,10 +12,10 @@ export default {
       state.editMode = data.editMode;
     },
     fn_setComponentStyle(state, data) {
-      state.canvasComponentList[state.curComponent].style = { ...data };
+      state.pagesComponents[state.curComponent].style = { ...data };
     },
     fm_upDateCanvasList(state, data) {
-      state.canvasComponentList = data;
+      state.pagesComponents = data;
     }
   },
   actions: {

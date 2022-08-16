@@ -35,11 +35,22 @@
   margin-left: -187.5px;
   z-index: 0;
 }
-.edit-container .edit-area .canvas-container .canvas-area .canvas {
+.edit-container .edit-area .canvas-container .canvas-area .canvas-box {
+  position: relative;
+}
+.edit-container .edit-area .canvas-container .canvas-area .canvas-box .canvas {
   width: 375px;
   height: 667px;
   background: #ffffff;
-  position: relative;
+}
+.edit-container .edit-area .canvas-container .sub-menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  background-color: #fff;
+  border-radius: 5px;
 }
 .edit-container .edit-area .property-list-container {
   height: 100%;
