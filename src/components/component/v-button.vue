@@ -11,7 +11,9 @@ export default {
     propValue: String, // 组件的内容（例如文字等等）
   },
   data() {
-    return {};
+    return {
+      url: "ann",
+    };
   },
   methods: {
     // textarea输入事件
@@ -22,6 +24,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-// .button {
-// }
+.button {
+  width: 40px;
+  height: 40px;
+}
 </style>
