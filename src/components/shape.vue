@@ -136,7 +136,6 @@ export default {
       width = parseFloat(width);
       top = parseFloat(top);
       left = parseFloat(left);
-      // console.log(top, left);
       const startX = mouseEvent.clientX; // 鼠标位置
       const startY = mouseEvent.clientY; // 鼠标位置
 
@@ -164,8 +163,8 @@ export default {
 
         // 移动点
         if (name == "upperLeft") {
-          defaultStyle.top = newTop;
-          defaultStyle.left = newLeft;
+          defaultStyle.top = newTop+ "px";
+          defaultStyle.left = newLeft+ "px";
           defaultStyle.height =
             distanceY1 + height > 0 ? distanceY1 + height + "px" : 0;
           defaultStyle.width =
@@ -179,17 +178,12 @@ export default {
           defaultStyle.width =
             distanceX1 + width > 0 ? distanceX1 + width + "px" : 0;
         }
-        // console.log(, startY); // 331 136
-
-        // defaultStyle.top =
-        // defaultStyle.left =
         this.$store.commit("componentData/fn_setComponentStyle", defaultStyle);
       };
 
       const up = () => {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
-        // needSave &&
       };
 
       document.addEventListener("mousemove", move);
