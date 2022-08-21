@@ -39,6 +39,9 @@
             <div id="test" @mousedown="handleMouseDown($event)">test</div>
           </div>
         </div> -->
+        <div class="sub-menu-container">
+          <componentPopup></componentPopup>
+        </div>
       </div>
       <!-- 属性列表框 -->
       <div class="property-list-container">
@@ -60,7 +63,7 @@
 <script>
 import Shape from "../../components/shape.vue";
 import component from "../../components/component.vue";
-// import componentPopup from "../../components/componentPopup/index.vue";
+import ComponentPopup from "../../components/componentPopup/index.vue";
 import vButton from "../../components/component/v-button.vue";
 import ToolBar from "../../components/edToolBar/edToolBar.vue";
 
@@ -69,9 +72,9 @@ export default {
   components: {
     Shape: Shape,
     Cpnt: component,
-    // ComponentPopup: componentPopup,
+    ComponentPopup,
     vButton,
-    ToolBar
+    ToolBar,
   },
   computed: {
     curComponent() {

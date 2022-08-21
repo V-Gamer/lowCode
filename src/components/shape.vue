@@ -163,8 +163,8 @@ export default {
 
         // 移动点
         if (name == "upperLeft") {
-          defaultStyle.top = newTop+ "px";
-          defaultStyle.left = newLeft+ "px";
+          defaultStyle.top = newTop + "px";
+          defaultStyle.left = newLeft + "px";
           defaultStyle.height =
             distanceY1 + height > 0 ? distanceY1 + height + "px" : 0;
           defaultStyle.width =

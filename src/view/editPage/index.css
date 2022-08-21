@@ -26,6 +26,7 @@
 }
 .edit-container .edit-area .canvas-container {
   flex: 1;
+  position: relative;
 }
 .edit-container .edit-area .canvas-container .canvas-area {
   position: fixed;
