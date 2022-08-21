@@ -71,12 +71,12 @@ export default {
           events: {}, // 事件列表
           style: {
             // 组件样式
-            width: 200,
-            height: 30,
+            width: "200px",
+            height: "30px",
             fontSize: 14,
             fontWeight: 500,
-            top: 0,
-            left: 0,
+            // top: 0,
+            // left: 0,
           },
         },
       ],

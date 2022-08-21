@@ -2,7 +2,9 @@
   <div class="edit-container">
     <!-- 工具栏区域 -->
     <div class="ed-toolBar-container">
-      <div class="ed-toolBar"></div>
+      <div class="ed-toolBar">
+        <ToolBar></ToolBar>
+      </div>
     </div>
     <div class="edit-area">
       <!-- 组件列表框 -->
@@ -11,7 +13,7 @@
       <div class="canvas-container">
         <div class="canvas-area">
           <!-- 画布大小由用户决定，此处用动态样式。我先默认随便用个宽高了 -->
-          <!-- <div class="canvas-box">
+          <div class="canvas-box">
             <div class="canvas" @click="fn_cancelSelectComponent"></div>
             <Shape
               v-for="(item, idx) in pagesComponents"
@@ -30,29 +32,26 @@
               </Cpnt>
             </Shape>
           </div>
+        </div>
+        <!-- <div class="sub-menu-container">
+          <componentPopup></componentPopup>
+          <div class="canvas" @drop="handledrop($event)">
+            <div id="test" @mousedown="handleMouseDown($event)">test</div>
+          </div>
         </div> -->
-          <div class="sub-menu-container">
-            <componentPopup></componentPopup>
-            <div class="canvas" @drop="handledrop($event)">
-              <!-- 拖拽功能实现 -->
-
-              <div id="test" @mousedown="handleMouseDown($event)">test</div>
-            </div>
-          </div>
+      </div>
+      <!-- 属性列表框 -->
+      <div class="property-list-container">
+        <!-- 组件拖拽 -->
+        <div
+          class="test2"
+          draggable="true"
+          @dragstart="handledragstart($event)"
+        >
+          test2
         </div>
-        <!-- 属性列表框 -->
-        <div class="property-list-container">
-          <!-- 组件拖拽 -->
-          <div
-            class="test2"
-            draggable="true"
-            @dragstart="handledragstart($event)"
-          >
-            test2
-          </div>
-          <v-button :propValue="burl"></v-button>
-          <!-- 属性列表 -->
-        </div>
+        <v-button :propValue="burl"></v-button>
+        <!-- 属性列表 -->
       </div>
     </div>
   </div>
@@ -61,16 +60,18 @@
 <script>
 import Shape from "../../components/shape.vue";
 import component from "../../components/component.vue";
-import componentPopup from "../../components/componentPopup/index.vue";
+// import componentPopup from "../../components/componentPopup/index.vue";
 import vButton from "../../components/component/v-button.vue";
+import ToolBar from "../../components/edToolBar/edToolBar.vue";
 
 export default {
   name: "editPage",
   components: {
     Shape: Shape,
     Cpnt: component,
-    ComponentPopup: componentPopup,
+    // ComponentPopup: componentPopup,
     vButton,
+    ToolBar
   },
   computed: {
     curComponent() {
@@ -129,7 +130,7 @@ export default {
   methods: {
     // 取消组件选择
     fn_cancelSelectComponent() {
-      console.log(this.$store.state.componentData.curComponent);
+      // console.log(this.$store.state.componentData.curComponent);
       if (this.$store.state.componentData.curComponent == undefined) return;
       this.$store.commit("componentData/fn_selectComponent", {
         curComponent: undefined,

@@ -4,17 +4,13 @@
     :style="{
       ...defaultStyle,
       'z-index': zIndex,
-      width: defaultStyle.width + 'px' || 'auto',
-      height: defaultStyle.height + 'px' || 'auto',
-      top: defaultStyle.top + 'px' || '',
-      left: defaultStyle.left + 'px' || '',
     }"
   >
     <div
       class="shape"
       :class="{ 'shape-active': active }"
       @click="fn_selectCurComponent(zIndex)"
-      @mousedown="fn_handleMouseDown"
+      @mousedown="fn_handleMouseDown($event)"
       @contextmenu="fn_handleContextmenu"
     >
       <div
@@ -79,8 +75,6 @@ export default {
         editMode: "edit",
       });
     },
-    // 按下鼠标事件
-    fn_handleMouseDown() {},
     // 用户点击组件时间事件
     fn_handleContextmenu() {},
     // 获取各个点的style
@@ -138,11 +132,11 @@ export default {
       // 获取默认样式
       const defaultStyle = { ...this.defaultStyle };
       let { height, width, top, left } = defaultStyle; // 组件的基本样式
-      height = Number(height);
-      width = Number(width);
-      top = Number(top);
-      left = Number(left);
-      console.log(top, left);
+      height = parseFloat(height);
+      width = parseFloat(width);
+      top = parseFloat(top);
+      left = parseFloat(left);
+      // console.log(top, left);
       const startX = mouseEvent.clientX; // 鼠标位置
       const startY = mouseEvent.clientY; // 鼠标位置
 
@@ -160,12 +154,12 @@ export default {
         const distanceY1 = startY - clientY;
         const distanceX1 = startX - clientX;
         if (name == "upperMiddle" || name == "lowerMiddle") {
-          defaultStyle.height = newHeight > 0 ? newHeight : 0;
+          defaultStyle.height = newHeight > 0 ? newHeight + "px" : 0;
         } else if (name == "middleLeft" || name == "middleRight") {
-          defaultStyle.width = newWidth > 0 ? newWidth : 0;
+          defaultStyle.width = newWidth > 0 ? newWidth + "px" : 0;
         } else {
-          defaultStyle.height = newHeight > 0 ? newHeight : 0;
-          defaultStyle.width = newWidth > 0 ? newWidth : 0;
+          defaultStyle.height = newHeight > 0 ? newHeight + "px" : 0;
+          defaultStyle.width = newWidth > 0 ? newWidth + "px" : 0;
         }
 
         // 移动点
@@ -173,15 +167,17 @@ export default {
           defaultStyle.top = newTop;
           defaultStyle.left = newLeft;
           defaultStyle.height =
-            distanceY1 + height > 0 ? distanceY1 + height : 0;
-          defaultStyle.width = distanceX1 + width > 0 ? distanceX1 + width : 0;
+            distanceY1 + height > 0 ? distanceY1 + height + "px" : 0;
+          defaultStyle.width =
+            distanceX1 + width > 0 ? distanceX1 + width + "px" : 0;
         } else if (name == "upperMiddle" || name == "upperRight") {
-          defaultStyle.top = newTop;
+          defaultStyle.top = newTop + "px";
           defaultStyle.height =
-            distanceY1 + height > 0 ? distanceY1 + height : 0;
+            distanceY1 + height > 0 ? distanceY1 + height + "px" : 0;
         } else if (name == "middleLeft" || name == "lowerLeft") {
-          defaultStyle.left = newLeft;
-          defaultStyle.width = distanceX1 + width > 0 ? distanceX1 + width : 0;
+          defaultStyle.left = newLeft + "px";
+          defaultStyle.width =
+            distanceX1 + width > 0 ? distanceX1 + width + "px" : 0;
         }
         // console.log(, startY); // 331 136
 
@@ -196,6 +192,34 @@ export default {
         // needSave &&
       };
 
+      document.addEventListener("mousemove", move);
+      document.addEventListener("mouseup", up);
+    },
+    // 按下鼠标事件
+    fn_handleMouseDown(e) {
+      if (this.zIndex == null) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      const defaultStyle = { ...this.defaultStyle };
+      const startY = e.clientY;
+      const startX = e.clientX;
+      const startTop = parseFloat(defaultStyle.top);
+      const startLeft = parseFloat(defaultStyle.left);
+
+      //拖动
+      const move = (moveEvent) => {
+        const currX = moveEvent.clientX;
+        const currY = moveEvent.clientY;
+        defaultStyle.top = currY - startY + startTop + "px";
+        defaultStyle.left = currX - startX + startLeft + "px";
+        this.$store.commit("componentData/fn_setComponentStyle", defaultStyle);
+      };
+      //拖动结束
+      const up = () => {
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
+      };
       document.addEventListener("mousemove", move);
       document.addEventListener("mouseup", up);
     },

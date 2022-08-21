@@ -7,8 +7,6 @@
         :element="element"
         :style="{
           ...cmptStyle,
-          width: cmptStyle.width + 'px' || 'auto',
-          height: cmptStyle.height + 'px' || 'auto',
         }"
       ></vText>
     </template>

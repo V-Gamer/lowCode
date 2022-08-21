@@ -12,11 +12,12 @@ export default {
       state.editMode = data.editMode;
     },
     fn_setComponentStyle(state, data) {
+      if (!state.pagesComponents[state.curComponent]) return
       state.pagesComponents[state.curComponent].style = { ...data };
     },
     fm_upDateCanvasList(state, data) {
       state.pagesComponents = data;
-    }
+    },
   },
   actions: {
 
