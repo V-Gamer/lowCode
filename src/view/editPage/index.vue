@@ -75,7 +75,8 @@ export default {
     ComponentPopup,
     vButton,
     ToolBar,
-  },
+    
+},
   computed: {
     curComponent() {
       return this.$store.state.componentData.curComponent;
