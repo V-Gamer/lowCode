@@ -7,6 +7,9 @@ import edToolBarData from './edToolBar'
 Vue.use(Vuex) //使用vuex
 
 export default new Vuex.Store({
+  state:{
+    curComponent,
+  },
   modules: {
     componentData,
     edToolBarData
