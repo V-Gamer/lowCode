@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3574502 */
+  src: url('./iconfont.woff2') format('woff2'),
+       url('./iconfont.woff') format('woff'),
+       url('./iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-xiangxia:before {
+  content: "\e603";
+}
+
+.icon-square:before {
+  content: "\e7d1";
+}
+
+.icon-triangle-solid:before {
+  content: "\e602";
+}
+
+.icon-position:before {
+  content: "\e601";
+}
+
+.icon-download:before {
+  content: "\e606";
+}
+
+.icon-unlock:before {
+  content: "\e8bb";
+}
+
+.icon-Lock:before {
+  content: "\e656";
+}
+
+.icon-line:before {
+  content: "\e65a";
+}
+
+.icon-back:before {
+  content: "\e65b";
+}
+
+.icon-circle:before {
+  content: "\e670";
+}
+
+.icon-play:before {
+  content: "\e600";
+}
+
+.icon-text:before {
+  content: "\e6ec";
+}
+
+.icon-arranged:before {
+  content: "\e605";
+}
+
+.icon-layer:before {
+  content: "\e617";
+}
+
+.icon-pic:before {
+  content: "\e8ba";
+}
+
+.icon-link:before {
+  content: "\e632";
+}
+
+.icon-triangle:before {
+  content: "\e659";
+}
+
