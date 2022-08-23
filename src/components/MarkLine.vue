@@ -30,6 +30,7 @@ export default {
     };
   },
   computed: mapState(["curComponent", "componentData"]),
+  //监听组件在画布中的移动事件
   mounted() {
     Eventbus.$on("move", (Downward, RightWard) => {
       this.fn_showline(Downward, RightWard);
@@ -43,10 +44,8 @@ export default {
       const line = this.$refs.line;
       const components = this.componentData;
       const curComponentStyle = getComponentStyle(this.curComponent.style);
-      const curComponentXCenter =
-        (curComponentStyle.top + curComponentStyle.bottom) / 2;
-      const curComponentYCenter =
-        (curComponentStyle.left + curComponentStyle.right) / 2;
+      const curComponentHalfwidth = curComponentStyle.width / 2;
+      const curComponentHalfHeight = curComponentStyle.height / 2;
 
       this.fn_hideLine();
 
@@ -54,8 +53,8 @@ export default {
         if (component === this.curComponent) return;
         const componentStyle = getComponentStyle(component.style);
         const { left, top, right, bottom } = componentStyle;
-        const componentXCenter = (top + bottom) / 2;
-        const componentYCenter = (left + right) / 2;
+        const curComponentHalfwidth = curComponentStyle.width / 2;
+        const curComponentHalfHeight = curComponentStyle.height / 2;
 
         const conditions = {
           top: [
@@ -141,8 +140,35 @@ export default {
             },
           ],
         };
+        const needToShow = [];
+        Object.keys(conditions).forEach((key) => {
+          // 遍历符合的条件并处理
+          conditions[key].forEach((condition) => {
+            if (!condition.isNearly) return;
+            // 修改当前组件位移
+            this.$store.commit("setShapeSingleStyle", {
+              key,
+              value:
+                rotate != 0
+                  ? this.translatecurComponentShift(
+                      key,
+                      condition,
+                      curComponentStyle
+                    )
+                  : condition.dragShift,
+            });
+
+            condition.lineNode.style[key] = `${condition.lineShift}px`;
+            needToShow.push(condition.line);
+          });
+        });
+        if (needToShow.length) {
+          this.chooseTheTureLine(needToShow, isDownward, isRightward);
+        }
       });
     },
+
+    //由多条线符合条件时，只显示一条，更加美观
     chooseTheTureLine(needToShow, isDownward, isRightward) {
       if (isRightward) {
         if (needToShow.includes("yr")) {
@@ -195,22 +221,22 @@ export default {
 
 <style scoped>
 .mark-line {
-    height: 100%;
+  height: 100%;
 }
 
 .line {
-    background: #59c7f9;
-    position: absolute;
-    z-index: 1000;
+  background: #59c7f9;
+  position: absolute;
+  z-index: 1000;
 }
 
 .xline {
-    width: 100%;
-    height: 1px;
+  width: 100%;
+  height: 1px;
 }
 
 .yline {
-    width: 1px;
-    height: 100%;
+  width: 1px;
+  height: 100%;
 }
 </style>
