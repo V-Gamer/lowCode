@@ -14,7 +14,12 @@
         <div class="canvas-area">
           <!-- 画布大小由用户决定，此处用动态样式。我先默认随便用个宽高了 -->
           <div class="canvas-box">
-            <div class="canvas" @click="fn_cancelSelectComponent"></div>
+            <div
+              class="canvas"
+              @click="fn_cancelSelectComponent"
+              @drop="fn_handledrop($event)"
+              @dragover="fn_handleDragOver"
+            ></div>
             <Shape
               v-for="(item, idx) in pagesComponents"
               :key="idx"
@@ -126,7 +131,7 @@ export default {
   },
   created() {
     this.$store.commit(
-      "componentData/fm_upDateCanvasList",
+      "componentData/fn_upDateCanvasList",
       this.pagesComponents
     );
   },
@@ -149,54 +154,58 @@ export default {
       this.d_indexX = e.clientX - e.target.offsetLeft;
       this.d_indexY = e.clientY - e.target.offsetTop;
     },
-    handledrop(e) {
-      if (this.d_flag) {
-        //进行判断，仅组件库拖动才可进入实现元素添加
-        this.d_flag = 0;
-        console.log("asd");
-        e.preventDefault();
-        e.stopPropagation();
+    fn_handledrop() {
+      console.log(111);
+      let { add_edit, addComIndex } = this.$store.state.componentData;
+      console.log(add_edit, addComIndex);
+      // if (!d_flag) {
+      //   return;
+      // }
+      // //进行判断，仅组件库拖动才可进入实现元素添加
+      // this.d_flag = 0;
+      // console.log("asd");
+      // e.preventDefault();
+      // e.stopPropagation();
 
-        var div1 = document.createElement("button");
-        var canvas_a = document.querySelector(".canvas-area");
-        var canvas = document.querySelector(".canvas");
+      // var div1 = document.createElement("button");
+      // var canvas_a = document.querySelector(".canvas-area");
+      // var canvas = document.querySelector(".canvas");
 
-        div1.style.backgroundColor = "pink";
-        div1.style.width = "50px";
-        div1.style.height = "50px";
-        div1.style.position = "absolute";
+      // div1.style.backgroundColor = "pink";
+      // div1.style.width = "50px";
+      // div1.style.height = "50px";
+      // div1.style.position = "absolute";
 
-        //将元素放到指定位置
-        div1.style.left =
-          e.clientX - canvas_a.offsetLeft - this.d_indexX + "px";
-        div1.style.top = e.clientY - canvas_a.offsetTop - this.d_indexY + "px";
-        canvas.appendChild(div1);
+      // //将元素放到指定位置
+      // div1.style.left = e.clientX - canvas_a.offsetLeft - this.d_indexX + "px";
+      // div1.style.top = e.clientY - canvas_a.offsetTop - this.d_indexY + "px";
+      // canvas.appendChild(div1);
 
-        this.components[this.c_index++] = div1; //将拖入元素放入数组存储
+      // this.components[this.c_index++] = div1; //将拖入元素放入数组存储
 
-        //添加事件，实现移动
-        div1.addEventListener("mousedown", function (e) {
-          const startY = e.clientY;
-          const startX = e.clientX;
-          var el = e.currentTarget;
-          var startLeft = el.offsetLeft;
-          var startTop = el.offsetTop;
+      // //添加事件，实现移动
+      // div1.addEventListener("mousedown", function (e) {
+      //   const startY = e.clientY;
+      //   const startX = e.clientX;
+      //   var el = e.currentTarget;
+      //   var startLeft = el.offsetLeft;
+      //   var startTop = el.offsetTop;
 
-          const move = (moveEvent) => {
-            const currX = moveEvent.clientX;
-            const currY = moveEvent.clientY;
-            el.style.top = currY - startY + startTop + "px";
-            el.style.left = currX - startX + startLeft + "px";
-          };
-          const up = () => {
-            document.removeEventListener("mousemove", move);
-            document.removeEventListener("mouseup", up);
-          };
-          document.addEventListener("mousemove", move);
-          document.addEventListener("mouseup", up);
-        });
-      }
+      //   const move = (moveEvent) => {
+      //     const currX = moveEvent.clientX;
+      //     const currY = moveEvent.clientY;
+      //     el.style.top = currY - startY + startTop + "px";
+      //     el.style.left = currX - startX + startLeft + "px";
+      //   };
+      //   const up = () => {
+      //     document.removeEventListener("mousemove", move);
+      //     document.removeEventListener("mouseup", up);
+      //   };
+      //   document.addEventListener("mousemove", move);
+      //   document.addEventListener("mouseup", up);
+      // });
     },
+    fn_handleDragOver() {},
     // 画布上移动
     handleMouseDown(e) {
       e.preventDefault();

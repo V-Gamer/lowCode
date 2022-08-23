@@ -12,7 +12,13 @@
       </div>
       <div class="componentList">
         <ul class="list">
-          <li class="list-item" v-for="(item, idx) in comList" :key="idx">
+          <li
+            class="list-item"
+            v-for="(item, idx) in comList"
+            :key="idx"
+            draggable
+            @dragstart="fn_handleDragStart(idx)"
+          >
             <div class="pic">
               <img :src="item.picUrl" alt="" />
             </div>
@@ -93,6 +99,9 @@ export default {
           style: {},
         },
       ],
+      com_edit: 0,
+      d_indexX: 0, //拖拽元素偏移量
+      d_indexY: 0,
     };
   },
   methods: {
@@ -100,6 +109,26 @@ export default {
     fn_componentListShow() {
       this.isComponentListShow = !this.isComponentListShow;
     },
+    // 开始拖动
+    fn_handleDragStart(idx) {
+      console.log("选中的组件下标为", idx);
+      this.$store.commit("componentData/fn_upDateChooseComponentIdx", idx);
+      this.$store.commit("componentData/fn_upDateComponentEditStatus", 1);
+    },
+    // 组件拖动事件
+    fn_handleDrop(e) {
+      // 阻止冒泡和事件委托
+      e.preventDefault();
+      e.stopPropagation();
+      // 克隆组件数据
+      const component = { ...this.comList[e.dataTransfer.getData("idx")] };
+      console.log(component);
+      // this.$store.commit("addComponent", component);
+    },
+    // 组件点击事件
+    fn_deselectCurComponent() {},
+    // 组件停止拖拽事件
+    fn_handleDragOver() {},
   },
 };
 </script>

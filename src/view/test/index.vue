@@ -84,7 +84,7 @@ export default {
   },
   created() {
     this.$store.commit(
-      "componentData/fm_upDateCanvasList",
+      "componentData/fn_upDateCanvasList",
       this.pagesComponents
     );
   },
