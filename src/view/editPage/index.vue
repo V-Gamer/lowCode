@@ -8,7 +8,9 @@
     </div>
     <div class="edit-area">
       <!-- 组件列表框 -->
-      <div class="component-list-container"></div>
+      <div class="component-list-container">
+        <RealTimeComponentList></RealTimeComponentList>
+      </div>
       <!-- 画布区域 -->
       <div class="canvas-container">
         <div class="canvas-area">
@@ -64,6 +66,7 @@
 import Shape from "../../components/shape.vue";
 import component from "../../components/component.vue";
 import ComponentPopup from "../../components/componentPopup/index.vue";
+import RealTimeComponentList from "../../components/RealTimeComponentList.vue";
 import vButton from "../../components/component/v-button.vue";
 import ToolBar from "../../components/edToolBar/edToolBar.vue";
 
@@ -75,7 +78,8 @@ export default {
     ComponentPopup,
     vButton,
     ToolBar,
-  },
+    RealTimeComponentList,
+},
   computed: {
     curComponent() {
       return this.$store.state.componentData.curComponent;
@@ -115,6 +119,26 @@ export default {
             left: 0,
           },
         },
+        // {
+        //   component: 'VButton',
+        //   label: '按钮',
+        //   propValue: '按钮',
+        //   icon: 'button',
+        //   style: {
+        //     width: 100,
+        //     height: 34,
+        //     borderWidth: 1,
+        //     borderColor: '',
+        //     borderRadius: '',
+        //     fontSize: '',
+        //     fontWeight: 400,
+        //     lineHeight: '',
+        //     letterSpacing: 0,
+        //     textAlign: '',
+        //     color: '',
+        //     backgroundColor: '',
+        //   },
+        // }
       ],
       components: [], //放入画布的元素
       c_index: 0, //放入画布元素个数
