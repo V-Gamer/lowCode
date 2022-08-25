@@ -2,16 +2,21 @@ export default {
   name: 'componentData',
   namespaced: true,
   state: {
-    curComponent: undefined,
-    editMode: 'normal',
+    curComponent: null,
     pagesComponents: [],
     addComIndex: null,
-    add_edit:0, // 选中的组件是否可以添加到画布
   },
   mutations: {
     fn_selectComponent(state, data) {
+      if (data.curComponent == null) {
+        state.pagesComponents[state.curComponent].editMode = 0;
+      } else {
+        state.curComponent = data.curComponent;
+        state.pagesComponents[state.curComponent].editMode = 1;
+        return;
+      }
       state.curComponent = data.curComponent;
-      state.editMode = data.editMode;
+
     },
     fn_setComponentStyle(state, data) {
       if (!state.pagesComponents[state.curComponent]) return
@@ -26,7 +31,7 @@ export default {
     },
     // 更新组件状态
     fn_upDateComponentEditStatus(state, data) {
-      state.add_edit = data;
+      state.pagesComponents[data.idx].editMode = data.editMode;
     }
   },
   actions: {

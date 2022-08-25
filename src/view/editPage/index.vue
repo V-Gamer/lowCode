@@ -13,13 +13,17 @@
       <div class="canvas-container">
         <div class="canvas-area">
           <!-- 画布大小由用户决定，此处用动态样式。我先默认随便用个宽高了 -->
-          <div class="canvas-box">
+          <div
+            class="canvas-box"
+            @drop="fn_handledrop($event)"
+            @dragover="fn_handleDragOver"
+          >
             <div
               class="canvas"
               @click="fn_cancelSelectComponent"
-              @drop="fn_handledrop($event)"
-              @dragover="fn_handleDragOver"
+              style="z-index: 1"
             ></div>
+            <!-- <div class="component-list-area"></div> -->
             <Shape
               v-for="(item, idx) in pagesComponents"
               :key="idx"
@@ -45,7 +49,35 @@
           </div>
         </div> -->
         <div class="sub-menu-container">
-          <componentPopup></componentPopup>
+          <div class="sub-menu">
+            <div class="icon">
+              <div class="sub-menu-icon" @click="fn_componentListShow">
+                <img src="./img/func_icon.png" alt="" />
+              </div>
+            </div>
+
+            <div class="component-popup" v-if="isComponentListShow">
+              <div class="content-title">
+                <span>组件</span>
+              </div>
+              <div class="componentList">
+                <ul class="list">
+                  <li
+                    class="list-item"
+                    v-for="(item, idx) in comList"
+                    :key="idx"
+                    draggable
+                    @dragstart="fn_handleDragStart(idx)"
+                  >
+                    <div class="pic">
+                      <img :src="item.picUrl" alt="" />
+                    </div>
+                    <div class="text">{{ item.label }}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- 属性列表框 -->
@@ -68,7 +100,6 @@
 <script>
 import Shape from "../../components/shape.vue";
 import component from "../../components/component.vue";
-import ComponentPopup from "../../components/componentPopup/index.vue";
 import vButton from "../../components/component/v-button.vue";
 import ToolBar from "../../components/edToolBar/edToolBar.vue";
 
@@ -77,7 +108,6 @@ export default {
   components: {
     Shape: Shape,
     Cpnt: component,
-    ComponentPopup,
     vButton,
     ToolBar,
   },
@@ -110,6 +140,7 @@ export default {
           icon: "el-icon-edit", // 左侧组件列表中显示的图标
           animations: [], // 动画列表
           events: {}, // 事件列表
+          editMode: 0,
           style: {
             // 组件样式
             width: 200,
@@ -127,9 +158,88 @@ export default {
       d_indexX: 0, //拖拽元素偏移量
       d_indexY: 0,
       burl: "按钮",
+      chooseComIdx: null,
+      isComponentListShow: false, // 控制可拖拽组件列表是否显示
+      comList: [
+        {
+          picUrl: require("./img/text.png"),
+          label: "文字", // 左侧组件列表中显示的名字
+          component: "v-text", // 组件名称，需要提前注册到 Vue
+          propValue: "文字", // 组件所使用的值
+          icon: "el-icon-edit", // 左侧组件列表中显示的图标
+          animations: [], // 动画列表
+          events: {}, // 事件列表
+          editMode: 0,
+          style: {
+            width: "auto",
+            height: "auto",
+          },
+        },
+        {
+          label: "矩形",
+          picUrl: require("./img/rectangle.png"),
+          component: "v-rectangle", // 组件名称，需要提前注册到 Vue
+          propValue: "", // 组件所使用的值
+          icon: "el-icon-edit", // 左侧组件列表中显示的图标
+          animations: [], // 动画列表
+          events: {}, // 事件列表
+          editMode: 0,
+          style: { width: "auto", height: "auto" },
+        },
+        {
+          label: "圆形",
+          picUrl: require("./img/circular.png"),
+          component: "v-circular", // 组件名称，需要提前注册到 Vue
+          propValue: "", // 组件所使用的值
+          icon: "el-icon-edit", // 左侧组件列表中显示的图标
+          animations: [], // 动画列表
+          events: {}, // 事件列表
+          editMode: 0,
+          style: {
+            width: "50px",
+            height: "50px",
+          },
+        },
+        {
+          label: "线条",
+          picUrl: require("./img/line.png"),
+          component: "v-line", // 组件名称，需要提前注册到 Vue
+          propValue: "", // 组件所使用的值
+          icon: "el-icon-edit", // 左侧组件列表中显示的图标
+          animations: [], // 动画列表
+          events: {}, // 事件列表
+          editMode: 0,
+          style: {},
+        },
+        {
+          label: "图片",
+          picUrl: require("./img/pic.png"),
+          component: "v-pic", // 组件名称，需要提前注册到 Vue
+          propValue: "", // 组件所使用的值
+          icon: "el-icon-edit", // 左侧组件列表中显示的图标
+          animations: [], // 动画列表
+          events: {}, // 事件列表
+          editMode: 0,
+          style: {},
+        },
+        {
+          label: "按钮",
+          picUrl: require("./img/button.png"),
+          component: "v-button", // 组件名称，需要提前注册到 Vue
+          propValue: "", // 组件所使用的值
+          icon: "el-icon-edit", // 左侧组件列表中显示的图标
+          animations: [], // 动画列表
+          events: {}, // 事件列表
+          editMode: 0,
+          style: {},
+        },
+      ],
     };
   },
   created() {
+    this.pagesComponents.map((item) => {
+      item.editMode = 0;
+    });
     this.$store.commit(
       "componentData/fn_upDateCanvasList",
       this.pagesComponents
@@ -139,10 +249,9 @@ export default {
     // 取消组件选择
     fn_cancelSelectComponent() {
       // console.log(this.$store.state.componentData.curComponent);
-      if (this.$store.state.componentData.curComponent == undefined) return;
+      if (this.$store.state.componentData.curComponent == null) return;
       this.$store.commit("componentData/fn_selectComponent", {
-        curComponent: undefined,
-        editMode: "normal",
+        curComponent: null,
       });
     },
     //元素拖拽入画布
@@ -154,83 +263,39 @@ export default {
       this.d_indexX = e.clientX - e.target.offsetLeft;
       this.d_indexY = e.clientY - e.target.offsetTop;
     },
-    fn_handledrop() {
-      console.log(111);
-      let { add_edit, addComIndex } = this.$store.state.componentData;
-      console.log(add_edit, addComIndex);
-      // if (!d_flag) {
-      //   return;
-      // }
-      // //进行判断，仅组件库拖动才可进入实现元素添加
-      // this.d_flag = 0;
-      // console.log("asd");
-      // e.preventDefault();
-      // e.stopPropagation();
-
-      // var div1 = document.createElement("button");
-      // var canvas_a = document.querySelector(".canvas-area");
-      // var canvas = document.querySelector(".canvas");
-
-      // div1.style.backgroundColor = "pink";
-      // div1.style.width = "50px";
-      // div1.style.height = "50px";
-      // div1.style.position = "absolute";
-
-      // //将元素放到指定位置
-      // div1.style.left = e.clientX - canvas_a.offsetLeft - this.d_indexX + "px";
-      // div1.style.top = e.clientY - canvas_a.offsetTop - this.d_indexY + "px";
-      // canvas.appendChild(div1);
-
-      // this.components[this.c_index++] = div1; //将拖入元素放入数组存储
-
-      // //添加事件，实现移动
-      // div1.addEventListener("mousedown", function (e) {
-      //   const startY = e.clientY;
-      //   const startX = e.clientX;
-      //   var el = e.currentTarget;
-      //   var startLeft = el.offsetLeft;
-      //   var startTop = el.offsetTop;
-
-      //   const move = (moveEvent) => {
-      //     const currX = moveEvent.clientX;
-      //     const currY = moveEvent.clientY;
-      //     el.style.top = currY - startY + startTop + "px";
-      //     el.style.left = currX - startX + startLeft + "px";
-      //   };
-      //   const up = () => {
-      //     document.removeEventListener("mousemove", move);
-      //     document.removeEventListener("mouseup", up);
-      //   };
-      //   document.addEventListener("mousemove", move);
-      //   document.addEventListener("mouseup", up);
-      // });
+    // 开始拖动
+    fn_handleDragStart(idx) {
+      this.chooseComIdx = idx;
+      this.$store.commit("componentData/fn_upDateChooseComponentIdx", idx);
+      this.pagesComponents[idx].editMode = 1;
+      this.$store.commit("componentData/fn_upDateComponentEditStatus", {
+        idx: idx,
+        editMode: 1,
+      });
     },
-    fn_handleDragOver() {},
-    // 画布上移动
-    handleMouseDown(e) {
+    // 组件拖动事件
+    fn_handleDragOver(e) {
+      e.preventDefault();
+    },
+    // 组件停止拖拽事件
+    fn_handledrop(e) {
       e.preventDefault();
       e.stopPropagation();
-
-      const startY = e.clientY;
-      const startX = e.clientX;
-      var el = e.currentTarget;
-      var startLeft = el.offsetLeft;
-      var startTop = el.offsetTop;
-
-      //拖动
-      const move = (moveEvent) => {
-        const currX = moveEvent.clientX;
-        const currY = moveEvent.clientY;
-        el.style.top = currY - startY + startTop + "px";
-        el.style.left = currX - startX + startLeft + "px";
-      };
-      //拖动结束
-      const up = () => {
-        document.removeEventListener("mousemove", move);
-        document.removeEventListener("mouseup", up);
-      };
-      document.addEventListener("mousemove", move);
-      document.addEventListener("mouseup", up);
+      let addComponent = JSON.parse(
+        JSON.stringify(this.comList[this.chooseComIdx])
+      );
+      addComponent.style.top = e.offsetY + "px";
+      addComponent.style.left = e.offsetX + "px";
+      this.pagesComponents.push(addComponent);
+      this.$store.commit(
+        "componentData/fn_upDateCanvasList",
+        this.pagesComponents
+      );
+      // this.$forceUpdate();
+    },
+    // 组件列表点击显示和消失事件
+    fn_componentListShow() {
+      this.isComponentListShow = !this.isComponentListShow;
     },
   },
 };
@@ -239,4 +304,5 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 @import "./index.less";
+@import "./componentPopup.less";
 </style>

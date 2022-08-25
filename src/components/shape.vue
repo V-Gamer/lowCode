@@ -72,7 +72,6 @@ export default {
     fn_selectCurComponent(index) {
       this.$store.commit("componentData/fn_selectComponent", {
         curComponent: index,
-        editMode: "edit",
       });
     },
     // 用户点击组件时间事件

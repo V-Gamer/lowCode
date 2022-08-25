@@ -2,12 +2,14 @@
 <template>
   <textarea
     class="textarea"
-    v-if="cmpt_editMode == 'edit'"
+    v-if="cmpt_editMode == 1"
     @input="fn_handleInput"
-    :value="propValue"
-  ></textarea>
+    maxlength="-1"
+    :value="str"
+  >
+  </textarea>
   <div v-else>
-    <div v-for="(str, idx) in propValue.split('/n')" :key="idx">
+    <div v-for="(str, idx) in str.split('/n')" :key="idx">
       {{ str }}
     </div>
   </div>
@@ -22,7 +24,9 @@ export default {
   },
   computed: {
     cmpt_editMode() {
-      return this.$store.state.componentData.editMode;
+      const { pagesComponents, curComponent } = this.$store.state.componentData;
+      if (curComponent === null) return 0;
+      return pagesComponents[curComponent].editMode;
     },
     cmpt_propValue() {
       const { canvasComponentList, curComponent } =
@@ -31,7 +35,12 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      str: "",
+    };
+  },
+  created() {
+    this.str = this.propValue;
   },
   methods: {
     // textarea输入事件
@@ -45,7 +54,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 .textarea {
-  height: auto;
-  width: auto;
+  height: 100%;
+  width: 100%;
 }
 </style>

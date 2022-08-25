@@ -44,6 +44,13 @@
   height: 667px;
   background: #ffffff;
 }
+.edit-container .edit-area .canvas-container .canvas-area .canvas-box .component-list-area {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 9;
+}
 .edit-container .edit-area .canvas-container .sub-menu-container {
   position: absolute;
   top: 20px;

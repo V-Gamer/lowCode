@@ -10,7 +10,6 @@
         }"
       ></vText>
     </template>
-
     <!-- v-button组件 -->
   </div>
 </template>
