@@ -2,7 +2,7 @@ export default {
   name: 'componentData',
   namespaced: true,
   state: {
-    curComponent: undefined,
+    curComponent:null,
     editMode: 'normal',
     pagesComponents: [],
   },

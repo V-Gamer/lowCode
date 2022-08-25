@@ -21,7 +21,11 @@
         </div>
         <!-- 工具 -->
         <li class="li_layout" v-for="(item, index) in list_left" :key="index">
-          <div class="iconfont" :class="item.icon"></div>
+          <div
+            class="iconfont"
+            :class="item.icon"
+            @click="showComponent(item.name)"
+          ></div>
         </li>
       </ul>
     </div>
@@ -92,6 +96,7 @@ import leftMenu from "./leftMenu";
 import alignMenu from "./alignMenu";
 import layerMenu from "./layerMenu";
 import canvasMenu from "./canvasMenu";
+
 export default {
   name: "edToolbar",
   data() {
@@ -114,18 +119,13 @@ export default {
           tips_show: false,
         },
         {
-          name: "直线",
+          name: "线条",
           icon: "icon-line",
           tips_show: false,
         },
         {
           name: "图片",
           icon: "icon-pic",
-          tips_show: false,
-        },
-        {
-          name: "批注",
-          icon: "icon-position",
           tips_show: false,
         },
       ],
@@ -172,6 +172,10 @@ export default {
   },
 
   methods: {
+    showComponent(componentName) {
+      this.$store.commit("clickShowComponent", componentName);
+    },
+
     //后退功能
     fn_back() {
       this.$router.push({

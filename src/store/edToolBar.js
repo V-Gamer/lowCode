@@ -1,8 +1,26 @@
 export default {
-    name: 'edToolBarData',
+    name: 'edToolBar',
     namespaced: true,
+    state: {
+        //控制工具栏中间展示
+        mid_show: true,
+        //控制左边第一个二级菜单显示
+        left_menu_show: false,
+        //控制对齐二级菜单
+        align_menu_show: false,
+        //控制图层二级菜单
+        layer_menu_show: false,
+        //控制画布二级菜单
+        canvas_menu_show: false,
+        //控制画布大小
+        canvas_size: '50%',
+    },
     actions: {},
     mutations: {
+        clickShowComponent(state,componentName)
+        {
+            
+        },
         //改变各种v-show
         fn_change(state, context) {
             state[context] = !state[context];
@@ -24,18 +42,5 @@ export default {
             }
         },
     },
-    state: {
-        //控制工具栏中间展示
-        mid_show: true,
-        //控制左边第一个二级菜单显示
-        left_menu_show: false,
-        //控制对齐二级菜单
-        align_menu_show: false,
-        //控制图层二级菜单
-        layer_menu_show: false,
-        //控制画布二级菜单
-        canvas_menu_show: false,
-        //控制画布大小
-        canvas_size: '50%',
-    },
+    
 };
