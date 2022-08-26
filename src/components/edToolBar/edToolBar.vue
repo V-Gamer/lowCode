@@ -216,7 +216,7 @@ export default {
 .ed-toolBarLayout {
   position: relative;
   width: 100%;
-  height: 40px;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

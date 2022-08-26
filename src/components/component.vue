@@ -5,6 +5,7 @@
       <vText
         :propValue="propValue"
         :element="element"
+        :editMode="editMode"
         :style="{
           ...cmptStyle,
         }"
@@ -23,6 +24,7 @@ export default {
     cmptStyle: Object, // 组件样式
     propValue: String, // 组件的内容（例如文字等等）,
     element: Object,
+    editMode: Number,
   },
   components: {
     vText: vText,

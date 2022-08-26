@@ -1,0 +1,240 @@
+.property-list-container .content-container .nav-list {
+  border-bottom: 1px solid #e8e8e8;
+}
+.property-list-container .content-container .nav-list .nav {
+  font-size: 15px;
+  padding: 10px;
+  width: 40px;
+  text-align: center;
+  position: relative;
+}
+.property-list-container .content-container .nav-list .nav-active::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #1169c9;
+}
+.property-list-container .content-container .style-list .align-box {
+  border-bottom: 1px solid #e8e8e8;
+}
+.property-list-container .content-container .style-list .align-box .list {
+  display: flex;
+  padding: 10px 15px;
+  justify-content: space-around;
+}
+.property-list-container .content-container .style-list .align-box .list .list-item {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.property-list-container .content-container .style-list .align-box .list .list-item .icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+.property-list-container .content-container .style-list .align-box .list .list-item:hover {
+  background: #f2f2f2;
+}
+.property-list-container .content-container .style-list .name-box {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  height: 42px;
+}
+.property-list-container .content-container .style-list .name-box .name-inp {
+  outline: none;
+  border: none;
+  width: 100%;
+}
+.property-list-container .content-container .style-list .name-box .name-inp:hover {
+  border-bottom: 1px solid #1169c9;
+}
+.property-list-container .content-container .style-list .position-box {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e8e8e8;
+  height: 76px;
+  box-sizing: border-box;
+}
+.property-list-container .content-container .style-list .position-box .position-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+.property-list-container .content-container .style-list .position-box .position-container .position-info {
+  margin-bottom: 10px;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+.property-list-container .content-container .style-list .position-box .position-container .position-info .text {
+  font-size: 12px;
+  color: #999999;
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+}
+.property-list-container .content-container .style-list .position-box .position-container .position-info input {
+  width: 40px;
+  height: 20px;
+  outline: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+.property-list-container .content-container .style-list .position-box .position-container .position-info > input:hover {
+  border-bottom: 1px solid #e8e8e8;
+}
+.property-list-container .content-container .style-list .position-box .position-container .position-info:nth-child(3),
+.property-list-container .content-container .style-list .position-box .position-container .position-info:nth-child(4) {
+  margin-bottom: 0;
+}
+.property-list-container .content-container .style-list .style-box {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.property-list-container .content-container .style-list .style-box .title {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 15px;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .font {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .font .font-size-inp {
+  width: 100px;
+  outline: none;
+  border: none;
+  height: 30px;
+  box-sizing: border-box;
+  padding-left: 15px;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .font .font-size-inp:hover {
+  border: 1px solid #e8e8e8;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .font .font-color {
+  width: 15px;
+  height: 15px;
+  margin-right: 40px;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .text-align-box .list {
+  display: flex;
+  align-items: center;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .text-align-box .list .list-item {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .text-align-box .list .list-item .icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+.property-list-container .content-container .style-list .text-box .text-style-box .text-align-box .list .list-item:hover {
+  background: #f2f2f2;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .list-item {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .list-item .icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .list-item .border-radius {
+  width: 16px;
+  height: 16px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .list-item:nth-child(2) {
+  margin-right: 10px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .list-item:hover {
+  background: #f2f2f2;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .border-parmas .all .inp {
+  width: 30px;
+  height: 20px;
+  outline: 0;
+  border: none;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .border-parmas .all .inp:hover {
+  border: 1px solid #e8e8e8;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .border-parmas .per {
+  display: flex;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .border-parmas .per .inp {
+  width: 30px;
+  height: 20px;
+  outline: 0;
+  border-radius: 0;
+  border: 1px solid #e8e8e8 !important;
+  border-right: 0;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .border-parmas .per .inp:first-child {
+  border-radius: 2px 0 0 2px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-box-top .border-parmas .per .inp:nth-child(4) {
+  border-right: 1px solid;
+  border-radius: 0 2px 2px 0;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-info-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-info-box .checkbox {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-info-box .color-block {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border-radius: 2px;
+  background: #1169c9;
+  margin-right: 10px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-info-box .text {
+  font-size: 13px;
+  line-height: 13px;
+  color: #999999;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .border-info-box:last-child {
+  margin-bottom: 15px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .select-border-box {
+  margin-left: 25px;
+}
+.property-list-container .content-container .style-list .outStyle-container .outStyle-box .select-border-box .select-box {
+  width: 60px;
+  font-size: 13px;
+  color: #999999;
+  outline: none;
+  height: 25px;
+}

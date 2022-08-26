@@ -10,13 +10,11 @@ export default {
     fn_selectComponent(state, data) {
       if (data.curComponent == null) {
         state.pagesComponents[state.curComponent].editMode = 0;
-      } else {
         state.curComponent = data.curComponent;
-        state.pagesComponents[state.curComponent].editMode = 1;
         return;
       }
       state.curComponent = data.curComponent;
-
+      state.pagesComponents[state.curComponent].editMode = 1;
     },
     fn_setComponentStyle(state, data) {
       if (!state.pagesComponents[state.curComponent]) return
@@ -32,7 +30,8 @@ export default {
     // 更新组件状态
     fn_upDateComponentEditStatus(state, data) {
       state.pagesComponents[data.idx].editMode = data.editMode;
-    }
+    },
+
   },
   actions: {
 

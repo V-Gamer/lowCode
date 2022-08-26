@@ -20,7 +20,7 @@
 }
 .edit-container .edit-area .component-list-container {
   height: 100%;
-  width: 200px;
+  width: 250px;
   background: #ffffff;
   border-right: 1px solid #e8e8e8;
 }
@@ -62,13 +62,7 @@
 }
 .edit-container .edit-area .property-list-container {
   height: 100%;
-  width: 200px;
+  width: 250px;
   background: #ffffff;
   border-left: 1px solid #e8e8e8;
-}
-.test2 {
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  background-color: pink;
 }

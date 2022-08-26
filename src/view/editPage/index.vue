@@ -37,6 +37,7 @@
                 :type="item.component"
                 :cmptStyle="{ ...item.style }"
                 :propValue="item.propValue"
+                :editMode="item.editMode"
               >
               </Cpnt>
             </Shape>
@@ -82,16 +83,160 @@
       </div>
       <!-- 属性列表框 -->
       <div class="property-list-container">
-        <!-- 组件拖拽 -->
         <div
-          class="test2"
-          draggable="true"
-          @dragstart="handledragstart($event)"
+          class="content-container"
+          v-if="
+            curComponent != null && cmpt_pagesComponents[curComponent].editMode
+          "
         >
-          test2
+          <div class="nav-list">
+            <div class="nav nav-active">样式</div>
+          </div>
+          <div class="style-list">
+            <div class="align-box">
+              <div class="list">
+                <a href="javascript:void(0)" class="list-item" title="左对齐">
+                  <span class="icon">
+                    <img src="./img/horizontal-left-alignment.png" />
+                  </span>
+                </a>
+                <a href="javascript:void(0)" class="list-item" title="水平居中">
+                  <span class="icon">
+                    <img src="./img/align-horizontal-center.png" />
+                  </span>
+                </a>
+                <a href="javascript:void(0)" class="list-item" title="右对齐">
+                  <span class="icon">
+                    <img src="./img/horizontal-right-alignment.png" />
+                  </span>
+                </a>
+                <a href="javascript:void(0)" class="list-item" title="顶部对齐">
+                  <span class="icon">
+                    <img src="./img/vertical-top-alignment.png" />
+                  </span>
+                </a>
+                <a href="javascript:void(0)" class="list-item" title="垂直居中">
+                  <span class="icon">
+                    <img src="./img/align-vertical-center.png" />
+                  </span>
+                </a>
+                <a href="javascript:void(0)" class="list-item" title="底对齐">
+                  <span class="icon">
+                    <img src="./img/vertical-bottom-alignment.png" />
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="name-box">
+              <input
+                class="name-inp"
+                type="text"
+                v-model="cmpt_pagesComponents[curComponent].propValue"
+                @input="fn_handleInpText"
+              />
+            </div>
+            <div class="position-box">
+              <div class="position-container">
+                <label class="position-info">
+                  <span class="text">X</span>
+                  <input type="number" />
+                </label>
+                <label class="position-info">
+                  <span class="text">Y</span>
+                  <input type="number" />
+                </label>
+                <label class="position-info">
+                  <span class="text">W</span>
+                  <input type="number" />
+                </label>
+                <label class="position-info">
+                  <span class="text">H</span>
+                  <input type="number" />
+                </label>
+              </div>
+            </div>
+            <div class="text-box style-box">
+              <p class="title">文本</p>
+              <div class="text-style-box">
+                <div class="font">
+                  <input type="number" class="font-size-inp" />
+                  <div class="font-color" style="background: #000"></div>
+                </div>
+                <div class="text-align-box">
+                  <div class="list">
+                    <a href="javascript:void(0)" class="list-item">
+                      <span class="icon">
+                        <img src="./img/text-align-left-active.png" alt="" />
+                      </span>
+                    </a>
+                    <a href="javascript:void(0)" class="list-item">
+                      <span class="icon">
+                        <img src="./img/text-align-center-active.png" alt="" />
+                      </span>
+                    </a>
+                    <a href="javascript:void(0)" class="list-item">
+                      <span class="icon">
+                        <img src="./img/text-align-right-active.png" alt="" />
+                      </span>
+                    </a>
+                    <a href="javascript:void(0)" class="list-item">
+                      <span class="icon">
+                        <img src="./img/text-align-justify-active.png" alt="" />
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="style-box outStyle-container">
+              <p class="title">外观</p>
+              <div class="outStyle-box">
+                <div class="border-box-top">
+                  <a class="list-item" href="javascript:void(0)">
+                    <span class="icon">
+                      <img src="./img/border.png" alt="" />
+                    </span>
+                  </a>
+                  <a class="list-item" href="javascript:void(0)">
+                    <span class="icon border-radius">
+                      <img src="./img/border-radius.png" alt="" />
+                    </span>
+                  </a>
+                  <div class="border-parmas">
+                    <div class="all" v-if="1">
+                      <input type="number" class="inp" />
+                    </div>
+                    <div class="per" v-else>
+                      <input type="number" class="inp" />
+                      <input type="number" class="inp" />
+                      <input type="number" class="inp" />
+                      <input type="number" class="inp" />
+                    </div>
+                  </div>
+                </div>
+                <div class="border-info-box">
+                  <input type="checkbox" class="checkbox" />
+                  <span class="color-block"></span>
+                  <span class="text">填充</span>
+                </div>
+                <div class="border-info-box">
+                  <input type="checkbox" class="checkbox" />
+                  <span class="color-block"></span>
+                  <span class="text">描边</span>
+                </div>
+                <div class="select-border-box">
+                  <select
+                    class="select-box"
+                    @change="fn_handleSelect($event.target.value)"
+                  >
+                    <option value="solid">实线</option>
+                    <option value="dashed">虚线</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <v-button :propValue="burl"></v-button>
-        <!-- 属性列表 -->
       </div>
     </div>
   </div>
@@ -100,7 +245,6 @@
 <script>
 import Shape from "../../components/shape.vue";
 import component from "../../components/component.vue";
-import vButton from "../../components/component/v-button.vue";
 import ToolBar from "../../components/edToolBar/edToolBar.vue";
 
 export default {
@@ -108,12 +252,14 @@ export default {
   components: {
     Shape: Shape,
     Cpnt: component,
-    vButton,
     ToolBar,
   },
   computed: {
     curComponent() {
       return this.$store.state.componentData.curComponent;
+    },
+    cmpt_pagesComponents() {
+      return this.$store.state.componentData.pagesComponents;
     },
   },
   data() {
@@ -152,12 +298,6 @@ export default {
           },
         },
       ],
-      components: [], //放入画布的元素
-      c_index: 0, //放入画布元素个数
-      d_flag: 0, //判断是否能添加元素
-      d_indexX: 0, //拖拽元素偏移量
-      d_indexY: 0,
-      burl: "按钮",
       chooseComIdx: null,
       isComponentListShow: false, // 控制可拖拽组件列表是否显示
       comList: [
@@ -297,6 +437,19 @@ export default {
     fn_componentListShow() {
       this.isComponentListShow = !this.isComponentListShow;
     },
+    // 边框样式选择事件
+    fn_handleSelect(val) {
+      console.log(val);
+    },
+    fn_handleInpText() {
+      this.$store.commit(
+        "componentData/fn_upDateCanvasList",
+        this.cmpt_pagesComponents
+      );
+      this.pagesComponents = this.$store.state.componentData.pagesComponents;
+      console.log(this.pagesComponents);
+      this.$forceUpdate();
+    },
   },
 };
 </script>
@@ -305,4 +458,5 @@ export default {
 <style lang="less" scoped>
 @import "./index.less";
 @import "./componentPopup.less";
+@import "./property-list.less";
 </style>
