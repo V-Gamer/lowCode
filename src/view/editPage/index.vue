@@ -136,7 +136,7 @@
                   <span class="text">X</span>
                   <input
                     type="number"
-                    @input="fn_handleInpChangePosition"
+                    @input="fn_handleChangeStyle"
                     v-model="cmpt_pagesComponents[curComponent].style.left"
                   />
                 </label>
@@ -144,7 +144,7 @@
                   <span class="text">Y</span>
                   <input
                     type="number"
-                    @input="fn_handleInpChangePosition"
+                    @input="fn_handleChangeStyle"
                     v-model="cmpt_pagesComponents[curComponent].style.top"
                   />
                 </label>
@@ -152,7 +152,7 @@
                   <span class="text">W</span>
                   <input
                     type="number"
-                    @input="fn_handleInpChangePosition"
+                    @input="fn_handleChangeStyle"
                     v-model="cmpt_pagesComponents[curComponent].style.width"
                   />
                 </label>
@@ -160,7 +160,7 @@
                   <span class="text">H</span>
                   <input
                     type="number"
-                    @input="fn_handleInpChangePosition"
+                    @input="fn_handleChangeStyle"
                     v-model="cmpt_pagesComponents[curComponent].style.height"
                   />
                 </label>
@@ -173,10 +173,27 @@
                   <input
                     type="number"
                     class="font-size-inp"
-                    @input="fn_handleInpChangePosition"
+                    @input="fn_handleChangeStyle"
                     v-model="cmpt_pagesComponents[curComponent].style.fontSize"
                   />
-                  <div class="font-color" style="background: #000"></div>
+                  <div
+                    class="font-color"
+                    :style="{
+                      background:
+                        cmpt_pagesComponents[curComponent].style.color ||
+                        '#000',
+                    }"
+                    @click="fn_isShowColorBox('font')"
+                  ></div>
+                  <div class="inpColor" v-if="isFontColorShow">
+                    <span class="text">颜色编码</span>
+                    <input
+                      type="text"
+                      class="inp"
+                      @input="fn_handleChangeStyle"
+                      v-model="cmpt_pagesComponents[curComponent].style.color"
+                    />
+                  </div>
                 </div>
                 <div class="text-align-box">
                   <div class="list">
@@ -232,13 +249,49 @@
                 </div>
                 <div class="border-info-box">
                   <input type="checkbox" class="checkbox" />
-                  <span class="color-block"></span>
+                  <span
+                    class="color-block"
+                    @click="fn_isShowColorBox('background')"
+                    :style="{
+                      background:
+                        cmpt_pagesComponents[curComponent].style.background ||
+                        '',
+                    }"
+                  ></span>
                   <span class="text">填充</span>
+                  <div class="inpColor" v-if="isBackgroundColorShow">
+                    <span class="text">颜色编码</span>
+                    <input
+                      type="text"
+                      class="inp"
+                      @input="fn_handleChangeStyle"
+                      v-model="
+                        cmpt_pagesComponents[curComponent].style.background
+                      "
+                    />
+                  </div>
                 </div>
                 <div class="border-info-box">
                   <input type="checkbox" class="checkbox" />
-                  <span class="color-block"></span>
+                  <span
+                    class="color-block"
+                    @click="fn_isShowColorBox('border')"
+                    :style="{
+                      background:
+                        cmpt_pagesComponents[curComponent].style.borderColor ||
+                        '',
+                    }"
+                  ></span>
                   <span class="text">描边</span>
+                  <div class="inpColor" v-if="isBorderColorShow">
+                    <span class="text">颜色编码</span>
+                    <input
+                      type="text"
+                      class="inp"
+                      @input="fn_handleChangeStyle"
+                      v-model="cmpt_pagesComponents[curComponent].style.borderColor"
+                    />
+                  </div>
                 </div>
                 <div class="select-border-box">
                   <select
@@ -314,6 +367,10 @@ export default {
             fontWeight: 500,
             top: 0,
             left: 0,
+            color: "purple",
+            border:1,
+            borderColor:'',
+            borderStyle:'solid'
           },
         },
       ],
@@ -393,6 +450,9 @@ export default {
           style: {},
         },
       ],
+      isFontColorShow: false,
+      isBackgroundColorShow: false,
+      isBorderColorShow: false,
     };
   },
   created() {
@@ -473,11 +533,21 @@ export default {
       this.$forceUpdate();
     },
     // 修改组件left\top\width\height值
-    fn_handleInpChangePosition() {
+    fn_handleChangeStyle() {
       this.$store.commit(
         "componentData/fn_upDateCanvasList",
         this.pagesComponents
       );
+    },
+    // 修改字体颜色等等
+    fn_isShowColorBox(name) {
+      if (name == "font") {
+        this.isFontColorShow = !this.isFontColorShow;
+      } else if (name == "background") {
+        this.isBackgroundColorShow = !this.isBackgroundColorShow;
+      } else if (name == "border") {
+        this.isBorderColorShow = !this.isBorderColorShow;
+      }
     },
   },
 };

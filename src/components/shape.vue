@@ -8,6 +8,7 @@
       left: defaultStyle.left + 'px',
       width: defaultStyle.width + 'px',
       height: defaultStyle.height + 'px',
+      boder: defaultStyle.boder + 'px',
       'font-size': defaultStyle.fontSize + 'px',
     }"
   >
