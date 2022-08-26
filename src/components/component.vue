@@ -8,6 +8,11 @@
         :editMode="editMode"
         :style="{
           ...cmptStyle,
+          top: cmptStyle.top + 'px',
+          left: cmptStyle.left + 'px',
+          width: cmptStyle.width + 'px',
+          height: cmptStyle.height + 'px',
+          'font-size': cmptStyle.fontSize + 'px',
         }"
       ></vText>
     </template>

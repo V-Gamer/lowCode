@@ -43,12 +43,7 @@
             </Shape>
           </div>
         </div>
-        <!-- <div class="sub-menu-container">
-          <componentPopup></componentPopup>
-          <div class="canvas" @drop="handledrop($event)">
-            <div id="test" @mousedown="handleMouseDown($event)">test</div>
-          </div>
-        </div> -->
+        <!-- 组件列表 -->
         <div class="sub-menu-container">
           <div class="sub-menu">
             <div class="icon">
@@ -139,19 +134,35 @@
               <div class="position-container">
                 <label class="position-info">
                   <span class="text">X</span>
-                  <input type="number" />
+                  <input
+                    type="number"
+                    @input="fn_handleInpChangePosition"
+                    v-model="cmpt_pagesComponents[curComponent].style.left"
+                  />
                 </label>
                 <label class="position-info">
                   <span class="text">Y</span>
-                  <input type="number" />
+                  <input
+                    type="number"
+                    @input="fn_handleInpChangePosition"
+                    v-model="cmpt_pagesComponents[curComponent].style.top"
+                  />
                 </label>
                 <label class="position-info">
                   <span class="text">W</span>
-                  <input type="number" />
+                  <input
+                    type="number"
+                    @input="fn_handleInpChangePosition"
+                    v-model="cmpt_pagesComponents[curComponent].style.width"
+                  />
                 </label>
                 <label class="position-info">
                   <span class="text">H</span>
-                  <input type="number" />
+                  <input
+                    type="number"
+                    @input="fn_handleInpChangePosition"
+                    v-model="cmpt_pagesComponents[curComponent].style.height"
+                  />
                 </label>
               </div>
             </div>
@@ -159,7 +170,12 @@
               <p class="title">文本</p>
               <div class="text-style-box">
                 <div class="font">
-                  <input type="number" class="font-size-inp" />
+                  <input
+                    type="number"
+                    class="font-size-inp"
+                    @input="fn_handleInpChangePosition"
+                    v-model="cmpt_pagesComponents[curComponent].style.fontSize"
+                  />
                   <div class="font-color" style="background: #000"></div>
                 </div>
                 <div class="text-align-box">
@@ -259,7 +275,10 @@ export default {
       return this.$store.state.componentData.curComponent;
     },
     cmpt_pagesComponents() {
-      return this.$store.state.componentData.pagesComponents;
+      const { pagesComponents } =
+        this.$store.state.componentData.pagesComponents;
+      if (pagesComponents == null) return this.pagesComponents;
+      return pagesComponents;
     },
   },
   data() {
@@ -419,6 +438,7 @@ export default {
     },
     // 组件停止拖拽事件
     fn_handledrop(e) {
+      console.log("停止拖拽");
       e.preventDefault();
       e.stopPropagation();
       let addComponent = JSON.parse(
@@ -441,14 +461,23 @@ export default {
     fn_handleSelect(val) {
       console.log(val);
     },
+    // 修改组件内容事件
     fn_handleInpText() {
+      console.log("修改组件中");
       this.$store.commit(
         "componentData/fn_upDateCanvasList",
-        this.cmpt_pagesComponents
+        this.pagesComponents
       );
       this.pagesComponents = this.$store.state.componentData.pagesComponents;
       console.log(this.pagesComponents);
       this.$forceUpdate();
+    },
+    // 修改组件left\top\width\height值
+    fn_handleInpChangePosition() {
+      this.$store.commit(
+        "componentData/fn_upDateCanvasList",
+        this.pagesComponents
+      );
     },
   },
 };

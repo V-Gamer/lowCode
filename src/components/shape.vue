@@ -4,6 +4,11 @@
     :style="{
       ...defaultStyle,
       'z-index': zIndex,
+      top: defaultStyle.top + 'px',
+      left: defaultStyle.left + 'px',
+      width: defaultStyle.width + 'px',
+      height: defaultStyle.height + 'px',
+      'font-size': defaultStyle.fontSize + 'px',
     }"
   >
     <div
@@ -152,30 +157,30 @@ export default {
         const distanceY1 = startY - clientY;
         const distanceX1 = startX - clientX;
         if (name == "upperMiddle" || name == "lowerMiddle") {
-          defaultStyle.height = newHeight > 0 ? newHeight + "px" : 0;
+          defaultStyle.height = newHeight > 0 ? newHeight : 0;
         } else if (name == "middleLeft" || name == "middleRight") {
-          defaultStyle.width = newWidth > 0 ? newWidth + "px" : 0;
+          defaultStyle.width = newWidth > 0 ? newWidth : 0;
         } else {
-          defaultStyle.height = newHeight > 0 ? newHeight + "px" : 0;
-          defaultStyle.width = newWidth > 0 ? newWidth + "px" : 0;
+          defaultStyle.height = newHeight > 0 ? newHeight : 0;
+          defaultStyle.width = newWidth > 0 ? newWidth : 0;
         }
 
         // 移动点
         if (name == "upperLeft") {
-          defaultStyle.top = newTop + "px";
-          defaultStyle.left = newLeft + "px";
+          defaultStyle.top = newTop;
+          defaultStyle.left = newLeft;
           defaultStyle.height =
-            distanceY1 + height > 0 ? distanceY1 + height + "px" : 0;
+            distanceY1 + height > 0 ? distanceY1 + height : 0;
           defaultStyle.width =
-            distanceX1 + width > 0 ? distanceX1 + width + "px" : 0;
+            distanceX1 + width > 0 ? distanceX1 + width : 0;
         } else if (name == "upperMiddle" || name == "upperRight") {
-          defaultStyle.top = newTop + "px";
+          defaultStyle.top = newTop;
           defaultStyle.height =
-            distanceY1 + height > 0 ? distanceY1 + height + "px" : 0;
+            distanceY1 + height > 0 ? distanceY1 + height : 0;
         } else if (name == "middleLeft" || name == "lowerLeft") {
-          defaultStyle.left = newLeft + "px";
+          defaultStyle.left = newLeft;
           defaultStyle.width =
-            distanceX1 + width > 0 ? distanceX1 + width + "px" : 0;
+            distanceX1 + width > 0 ? distanceX1 + width : 0;
         }
         this.$store.commit("componentData/fn_setComponentStyle", defaultStyle);
       };
@@ -204,8 +209,8 @@ export default {
       const move = (moveEvent) => {
         const currX = moveEvent.clientX;
         const currY = moveEvent.clientY;
-        defaultStyle.top = currY - startY + startTop + "px";
-        defaultStyle.left = currX - startX + startLeft + "px";
+        defaultStyle.top = currY - startY + startTop;
+        defaultStyle.left = currX - startX + startLeft;
         this.$store.commit("componentData/fn_setComponentStyle", defaultStyle);
       };
       //拖动结束
