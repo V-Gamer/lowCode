@@ -62,23 +62,24 @@ export default {
         },
       ],
       pagesComponents: [
-        {
-          component: "v-text", // 组件名称，需要提前注册到 Vue
-          label: "文字", // 左侧组件列表中显示的名字
-          propValue: "文字", // 组件所使用的值
-          icon: "el-icon-edit", // 左侧组件列表中显示的图标
-          animations: [], // 动画列表
-          events: {}, // 事件列表
-          style: {
-            // 组件样式
-            width: "200px",
-            height: "30px",
-            fontSize: 14,
-            fontWeight: 500,
-            // top: 0,
-            // left: 0,
-          },
-        },
+        // {
+        //   // picUrl: require("../../components/componentPopup/img/text.png"),
+        //   component: "v-text", // 组件名称，需要提前注册到 Vue
+        //   label: "文字", // 左侧组件列表中显示的名字
+        //   propValue: "文字", // 组件所使用的值
+        //   icon: "el-icon-edit", // 左侧组件列表中显示的图标
+        //   animations: [], // 动画列表
+        //   events: {}, // 事件列表
+        //   style: {
+        //     // 组件样式
+        //     width: "200px",
+        //     height: "30px",
+        //     fontSize: 14,
+        //     fontWeight: 500,
+        //     // top: 0,
+        //     // left: 0,
+        //   },
+        // },
       ],
     };
   },
